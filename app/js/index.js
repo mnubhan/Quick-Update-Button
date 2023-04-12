@@ -141,7 +141,7 @@ function initializeWidget() {
               //   } // end of for loop
               // }
               for (var i = 0; i < taskList.length; i++) {
-                if (taskList[i]["Status"] !== "Completed") {
+                // if (taskList[i]["Status"] !== "Completed") {
                   var taskTableRow = document.createElement("tr");
                   taskTableRow.setAttribute("id", `taskTableRow${i}`);
                   taskTableRow.setAttribute("class", "taskTableRow");
@@ -196,7 +196,7 @@ function initializeWidget() {
                       });
                     };
                   } )(i, taskList[i]["id"]);
-                }
+                // }
               }
               var closeButton = document.createElement("button");
               var closeButtonText = document.createTextNode("Close Widget");
