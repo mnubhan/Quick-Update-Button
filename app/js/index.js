@@ -49,88 +49,166 @@ function initializeWidget() {
               page: 1,
             }).then(function (response) {
               var taskList = response.data;
-              console.log(taskList);
+              var taskTable = document.createElement("table");
+              taskTable.setAttribute("id", "taskTable");
+              taskTable.setAttribute("class", "taskTable");
+              taskTable.setAttribute("border", "1");
+              taskTable.setAttribute("cellspacing", "0");
+              taskTable.setAttribute("cellpadding", "5");
+              taskTable.setAttribute("width", "100%");
+              var taskTableHeader = document.createElement("tr");
+              taskTableHeader.setAttribute("id", "taskTableHeader");
+              document.getElementById("mainInformation").appendChild(taskTable);
+              document.getElementById("taskTable").appendChild(taskTableHeader);
+              const arrHeaders = ["Task Name", "Priotity" ,"Status", "End Date", "Action"];
+              arrHeaders.forEach((header, i) => {
+                var taskTableHeaderSubject = document.createElement("th");
+                taskTableHeaderSubject.setAttribute(
+                  "id",
+                  `taskTableHeader${i}`
+                );
+                taskTableHeaderSubject.setAttribute("class", "taskTableHeader");
+                var taskTableHeaderSubjectText =
+                  document.createTextNode(header);
+                taskTableHeaderSubject.appendChild(taskTableHeaderSubjectText);
+                document
+                  .getElementById("taskTableHeader")
+                  .appendChild(taskTableHeaderSubject);
+              });
+              // for (var i = 0; i < taskList.length; i++) {
+              //   if (taskList[i]["Status"] !== "Completed") {
+              //     /*
+              //      * Create a new div for each task
+              //      */
+              //     var newDiv = document.createElement("div");
+              //     newDiv.setAttribute("id", "task" + i);
+              //     newDiv.setAttribute("class", "task");
+              //     /*
+              //      * Create a new subject for each task
+              //      */
+              //     var newSubject = document.createElement("h5");
+              //     var newSubjectText = document.createTextNode(
+              //       taskList[i]["Subject"]
+              //     );
+              //     newSubject.appendChild(newSubjectText);
+              //     newDiv.appendChild(newSubject);
+              //     /*
+              //      * Create a new status for each task
+              //      */
+              //     var newStatus = document.createElement("p");
+              //     var newStatusText = document.createTextNode(
+              //       taskList[i]["Status"]
+              //     );
+              //     newStatus.setAttribute("id", "taskStatus" + i);
+              //     newStatus.appendChild(newStatusText);
+              //     newDiv.appendChild(newStatus);
+              //     /*
+              //      * Create a new button for each task
+              //      */
+              //     var newButton = document.createElement("button");
+              //     var newButtonText = document.createTextNode("Close");
+              //     newButton.appendChild(newButtonText);
+              //     newButton.setAttribute("class", "btn-task");
+              //     newDiv.appendChild(newButton);
+              //     /*
+              //      * Append the new div to the main div
+              //      */
+              //     document
+              //       .getElementById("mainInformation")
+              //       .appendChild(newDiv);
+              //     /*
+              //       * Add the onclick event to the button
+              //       * by using javascript closure
+              //       * javascript closure is a function that has access to the parent scope, even after the parent function has closed.
+              //       * Use IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it is defined.
+              //     */
+
+              //     (function (i, taskId) {
+              //       newButton.onclick = function () {
+              //         ZOHO.CRM.API.updateRecord({
+              //           Entity: "Tasks",
+              //           APIData: {
+              //             id: taskId,
+              //             Status: "Completed",
+              //           },
+              //           Trigger: ["workflow"],
+              //         }).then(function () {
+              //           var divTask = document.getElementById("task" + i);
+              //           divTask.remove();
+              //         });
+              //       };
+              //     })(i, taskList[i]["id"]);
+              //   } // end of for loop
+              // }
               for (var i = 0; i < taskList.length; i++) {
                 if (taskList[i]["Status"] !== "Completed") {
-                  var newDiv = document.createElement("div");
-                  var newSubject = document.createElement("h3");
-                  var newSubjectText = document.createTextNode(
-                    taskList[i]["Subject"]
-                  );
-                  newSubject.appendChild(newSubjectText);
-                  newDiv.appendChild(newSubject);
-                  var newStatus = document.createElement("select");
-                  var newStatusOption1 = document.createElement("option");
-                  var newStatusOption1Text =
-                    document.createTextNode("Not Started");
-                  newStatusOption1.appendChild(newStatusOption1Text);
-                  newStatus.appendChild(newStatusOption1);
-                  var newStatusOption2 = document.createElement("option");
-                  var newStatusOption2Text =
-                    document.createTextNode("In Progress");
-                  newStatusOption2.appendChild(newStatusOption2Text);
-                  newStatus.appendChild(newStatusOption2);
-                  var newStatusOption3 = document.createElement("option");
-                  var newStatusOption3Text =
-                    document.createTextNode("Completed");
-                  newStatusOption3.appendChild(newStatusOption3Text);
-                  newStatus.appendChild(newStatusOption3);
-                  var newStatusOption4 = document.createElement("option");
-                  var newStatusOption4Text =
-                    document.createTextNode("Deffered");
-                  newStatusOption4.appendChild(newStatusOption4Text);
-                  newStatus.appendChild(newStatusOption4);
-                  var newStatusOption5 = document.createElement("option");
-                  var newStatusOption5Text = document.createTextNode(
-                    "Waiting on someone else"
-                  );
-                  newStatusOption5.appendChild(newStatusOption5Text);
-                  newStatus.appendChild(newStatusOption5);
-                  newStatus.setAttribute("id", "taskStatus" + i);
-                  newDiv.appendChild(newStatus);
-                  var newDescription = document.createElement("textarea");
-                  newDescription.setAttribute("id", "taskDescription" + i);
-                  newDiv.appendChild(newDescription);
-                  var newButton = document.createElement("button");
-                  var newButtonText = document.createTextNode("Update Task");
-                  newButton.appendChild(newButtonText);
-                  newButton.setAttribute("id", "updateTask" + i);
-                  newDiv.appendChild(newButton);
+                  var taskTableRow = document.createElement("tr");
+                  taskTableRow.setAttribute("id", `taskTableRow${i}`);
+                  taskTableRow.setAttribute("class", "taskTableRow");
                   document
-                    .getElementById("mainInformation")
-                    .appendChild(newDiv);
-                  document.getElementById("taskDescription" + i).value =
-                    taskList[i]["Description"];
-                  document.getElementById("taskStatus" + i).value =
-                    taskList[i]["Status"];
-                  document.getElementById("updateTask" + i).onclick =
-                    function () {
-                      var taskStatus = document.getElementById(
-                        "taskStatus" + i
-                      ).value;
-                      var taskDescription = document.getElementById(
-                        "taskDescription" + i
-                      ).value;
+                    .getElementById("taskTable")
+                    .appendChild(taskTableRow);
+                  var taskTableSubject = document.createElement("td");
+                  taskTableSubject.setAttribute("id", `taskTableSubject${i}`);
+                  taskTableSubject.setAttribute("class", "taskTableSubject");
+                  var taskTableSubjectText = document.createTextNode(taskList[i]["Subject"]);
+                  taskTableSubject.appendChild(taskTableSubjectText);
+                  document.getElementById(`taskTableRow${i}`).appendChild(taskTableSubject);
+                  var taskTablePriority = document.createElement("td");
+                  taskTablePriority.setAttribute("id", `taskTablePriority${i}`);
+                  taskTablePriority.setAttribute("class","taskTablePriority");
+                  var priorityText = document.createTextNode(taskList[i]["Priority"]);
+                  taskTablePriority.appendChild(priorityText);
+                  document.getElementById(`taskTableRow${i}`).appendChild(taskTablePriority);
+                  var taskTableStatus = document.createElement("td");
+                  taskTableStatus.setAttribute("id", `taskTableStatus${i}`);
+                  taskTableStatus.setAttribute("class", "taskTableStatus");
+                  var taskTableStatusText = document.createTextNode(taskList[i]["Status"]);
+                  taskTableStatus.appendChild(taskTableStatusText);
+                  document.getElementById(`taskTableRow${i}`).appendChild(taskTableStatus);
+                  var taskTableEndDate = document.createElement("td");
+                  taskTableEndDate.setAttribute("id", `taskTableEndDate${i}`);
+                  taskTableEndDate.setAttribute("class", "taskTableEndDate");
+                  var taskTableEndDateText = document.createTextNode(taskList[i]["End Date"]);
+                  taskTableEndDate.appendChild(taskTableEndDateText);
+                  document.getElementById(`taskTableRow${i}`).appendChild(taskTableEndDate);
+                  var taskTableAction = document.createElement("td");
+                  taskTableAction.setAttribute("id", `taskTableAction${i}`);
+                  taskTableAction.setAttribute("class", "taskTableAction");
+                  var taskTableActionButton = document.createElement("button");
+                  var taskTableActionButtonText = document.createTextNode("Close");
+                  taskTableActionButton.appendChild(taskTableActionButtonText);
+                  taskTableActionButton.setAttribute("class", "btn-task");
+                  taskTableAction.appendChild(taskTableActionButton);
+                  document.getElementById(`taskTableRow${i}`).appendChild(taskTableAction);
+                  (function (i, taskId) {
+                    taskTableActionButton.onclick = function () {
                       ZOHO.CRM.API.updateRecord({
                         Entity: "Tasks",
                         APIData: {
-                          id: taskList[i]["id"],
-                          Status: taskStatus,
-                          Description: taskDescription,
+                          id: taskId,
+                          Status: "Completed",
                         },
                         Trigger: ["workflow"],
-                      }).then(function () {});
+                      }).then(function () {
+                        var divTask = document.getElementById(`taskTableRow${i}`);
+                        divTask.remove();
+                      });
                     };
+                  } )(i, taskList[i]["id"]);
                 }
-              } // end of for loop
+              }
               var closeButton = document.createElement("button");
-              var closeButtonText = document.createTextNode("Close");
+              var closeButtonText = document.createTextNode("Close Widget");
               closeButton.appendChild(closeButtonText);
               closeButton.setAttribute("id", "closeButton");
-              document.getElementById("mainInformation").appendChild(closeButton);
+              closeButton.setAttribute("style", "margin-top: 20px;")
+              document
+                .getElementById("mainInformation")
+                .appendChild(closeButton);
               document.getElementById("closeButton").onclick = function () {
                 ZOHO.CRM.UI.Popup.closeReload();
-              }
+              };
             });
           });
         };

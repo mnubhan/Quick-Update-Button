@@ -6,24 +6,26 @@
     <script src="../js/jquery-min.js"></script>
   </head>
   <body>
-    <div class="blockQuote">
-      <p class="title">Records Info</p>
-      <p id="recordInfo"> </p>
-      <p>Lead Status</p>
-      <select id="leadStatus">
-        <option value="Attempted to Contact">Attempted to Contact</option>
-        <option value="Contact in Future">Contact in Future</option>
-        <option value="Contacted">Contacted</option>
-        <option value="Junk Lead">Junk Lead</option>
-        <option value="Lost Lead">Lost Lead</option>
-        <option value="Not Contacted">Not Contacted</option>
-        <option value="Pre Qualified">Pre Qualified</option>
-        <option value="Not Qualified">Not Qualified</option>
-      </select>
-      <p>Description</p>
-      <textarea id="description" rows="4" cols="50"></textarea>
-      <br>
-      <button id="updateRecord">Update Record</button>
+    <div id="mainInformation">
+      <div id="leadInformation">
+        <p class="title">Records Info</p>
+        <p id="recordInfo"></p>
+        <p>Lead Status</p>
+        <select id="leadStatus">
+          <option value="Attempted to Contact">Attempted to Contact</option>
+          <option value="Contact in Future">Contact in Future</option>
+          <option value="Contacted">Contacted</option>
+          <option value="Junk Lead">Junk Lead</option>
+          <option value="Lost Lead">Lost Lead</option>
+          <option value="Not Contacted">Not Contacted</option>
+          <option value="Pre Qualified">Pre Qualified</option>
+          <option value="Not Qualified">Not Qualified</option>
+        </select>
+        <p>Description</p>
+        <textarea id="description" rows="4" cols="50"></textarea>
+        <br />
+        <button id="updateRecord">Update Record</button>
+      </div>
     </div>
     <script type="text/javascript">
       $(document).ready(function () {
