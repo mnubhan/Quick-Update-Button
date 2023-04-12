@@ -38,8 +38,6 @@ function initializeWidget() {
             },
             Trigger: ["workflow"],
           }).then(function () {
-            // ZOHO.CRM.UI.Popup.closeReload();
-            // go to the next page of html
             const divLead = document.getElementById("leadInformation");
             divLead.remove();
             ZOHO.CRM.API.getRelatedRecords({
@@ -75,73 +73,7 @@ function initializeWidget() {
                   .getElementById("taskTableHeader")
                   .appendChild(taskTableHeaderSubject);
               });
-              // for (var i = 0; i < taskList.length; i++) {
-              //   if (taskList[i]["Status"] !== "Completed") {
-              //     /*
-              //      * Create a new div for each task
-              //      */
-              //     var newDiv = document.createElement("div");
-              //     newDiv.setAttribute("id", "task" + i);
-              //     newDiv.setAttribute("class", "task");
-              //     /*
-              //      * Create a new subject for each task
-              //      */
-              //     var newSubject = document.createElement("h5");
-              //     var newSubjectText = document.createTextNode(
-              //       taskList[i]["Subject"]
-              //     );
-              //     newSubject.appendChild(newSubjectText);
-              //     newDiv.appendChild(newSubject);
-              //     /*
-              //      * Create a new status for each task
-              //      */
-              //     var newStatus = document.createElement("p");
-              //     var newStatusText = document.createTextNode(
-              //       taskList[i]["Status"]
-              //     );
-              //     newStatus.setAttribute("id", "taskStatus" + i);
-              //     newStatus.appendChild(newStatusText);
-              //     newDiv.appendChild(newStatus);
-              //     /*
-              //      * Create a new button for each task
-              //      */
-              //     var newButton = document.createElement("button");
-              //     var newButtonText = document.createTextNode("Close");
-              //     newButton.appendChild(newButtonText);
-              //     newButton.setAttribute("class", "btn-task");
-              //     newDiv.appendChild(newButton);
-              //     /*
-              //      * Append the new div to the main div
-              //      */
-              //     document
-              //       .getElementById("mainInformation")
-              //       .appendChild(newDiv);
-              //     /*
-              //       * Add the onclick event to the button
-              //       * by using javascript closure
-              //       * javascript closure is a function that has access to the parent scope, even after the parent function has closed.
-              //       * Use IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it is defined.
-              //     */
-
-              //     (function (i, taskId) {
-              //       newButton.onclick = function () {
-              //         ZOHO.CRM.API.updateRecord({
-              //           Entity: "Tasks",
-              //           APIData: {
-              //             id: taskId,
-              //             Status: "Completed",
-              //           },
-              //           Trigger: ["workflow"],
-              //         }).then(function () {
-              //           var divTask = document.getElementById("task" + i);
-              //           divTask.remove();
-              //         });
-              //       };
-              //     })(i, taskList[i]["id"]);
-              //   } // end of for loop
-              // }
               for (var i = 0; i < taskList.length; i++) {
-                // if (taskList[i]["Status"] !== "Completed") {
                   var taskTableRow = document.createElement("tr");
                   taskTableRow.setAttribute("id", `taskTableRow${i}`);
                   taskTableRow.setAttribute("class", "taskTableRow");
@@ -196,7 +128,6 @@ function initializeWidget() {
                       });
                     };
                   } )(i, taskList[i]["id"]);
-                // }
               }
               var closeButton = document.createElement("button");
               var closeButtonText = document.createTextNode("Close Widget");
