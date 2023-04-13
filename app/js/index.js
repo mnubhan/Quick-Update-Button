@@ -58,7 +58,13 @@ function initializeWidget() {
               taskTableHeader.setAttribute("id", "taskTableHeader");
               document.getElementById("mainInformation").appendChild(taskTable);
               document.getElementById("taskTable").appendChild(taskTableHeader);
-              const arrHeaders = ["Task Name", "Priotity" ,"Status", "End Date", "Action"];
+              const arrHeaders = [
+                "Task Name",
+                "Priotity",
+                "Status",
+                "End Date",
+                "Action",
+              ];
               arrHeaders.forEach((header, i) => {
                 var taskTableHeaderSubject = document.createElement("th");
                 taskTableHeaderSubject.setAttribute(
@@ -74,6 +80,7 @@ function initializeWidget() {
                   .appendChild(taskTableHeaderSubject);
               });
               for (var i = 0; i < taskList.length; i++) {
+                if (taskList[i]["Status"] != "Completed") {
                   var taskTableRow = document.createElement("tr");
                   taskTableRow.setAttribute("id", `taskTableRow${i}`);
                   taskTableRow.setAttribute("class", "taskTableRow");
@@ -83,36 +90,55 @@ function initializeWidget() {
                   var taskTableSubject = document.createElement("td");
                   taskTableSubject.setAttribute("id", `taskTableSubject${i}`);
                   taskTableSubject.setAttribute("class", "taskTableSubject");
-                  var taskTableSubjectText = document.createTextNode(taskList[i]["Subject"]);
+                  var taskTableSubjectText = document.createTextNode(
+                    taskList[i]["Subject"]
+                  );
                   taskTableSubject.appendChild(taskTableSubjectText);
-                  document.getElementById(`taskTableRow${i}`).appendChild(taskTableSubject);
+                  document
+                    .getElementById(`taskTableRow${i}`)
+                    .appendChild(taskTableSubject);
                   var taskTablePriority = document.createElement("td");
                   taskTablePriority.setAttribute("id", `taskTablePriority${i}`);
-                  taskTablePriority.setAttribute("class","taskTablePriority");
-                  var priorityText = document.createTextNode(taskList[i]["Priority"]);
+                  taskTablePriority.setAttribute("class", "taskTablePriority");
+                  var priorityText = document.createTextNode(
+                    taskList[i]["Priority"]
+                  );
                   taskTablePriority.appendChild(priorityText);
-                  document.getElementById(`taskTableRow${i}`).appendChild(taskTablePriority);
+                  document
+                    .getElementById(`taskTableRow${i}`)
+                    .appendChild(taskTablePriority);
                   var taskTableStatus = document.createElement("td");
                   taskTableStatus.setAttribute("id", `taskTableStatus${i}`);
                   taskTableStatus.setAttribute("class", "taskTableStatus");
-                  var taskTableStatusText = document.createTextNode(taskList[i]["Status"]);
+                  var taskTableStatusText = document.createTextNode(
+                    taskList[i]["Status"]
+                  );
                   taskTableStatus.appendChild(taskTableStatusText);
-                  document.getElementById(`taskTableRow${i}`).appendChild(taskTableStatus);
+                  document
+                    .getElementById(`taskTableRow${i}`)
+                    .appendChild(taskTableStatus);
                   var taskTableEndDate = document.createElement("td");
                   taskTableEndDate.setAttribute("id", `taskTableEndDate${i}`);
                   taskTableEndDate.setAttribute("class", "taskTableEndDate");
-                  var taskTableEndDateText = document.createTextNode(taskList[i]["End Date"]);
+                  var taskTableEndDateText = document.createTextNode(
+                    taskList[i]["Due_Date"]
+                  );
                   taskTableEndDate.appendChild(taskTableEndDateText);
-                  document.getElementById(`taskTableRow${i}`).appendChild(taskTableEndDate);
+                  document
+                    .getElementById(`taskTableRow${i}`)
+                    .appendChild(taskTableEndDate);
                   var taskTableAction = document.createElement("td");
                   taskTableAction.setAttribute("id", `taskTableAction${i}`);
                   taskTableAction.setAttribute("class", "taskTableAction");
                   var taskTableActionButton = document.createElement("button");
-                  var taskTableActionButtonText = document.createTextNode("Close");
+                  var taskTableActionButtonText =
+                    document.createTextNode("Close");
                   taskTableActionButton.appendChild(taskTableActionButtonText);
                   taskTableActionButton.setAttribute("class", "btn-task");
                   taskTableAction.appendChild(taskTableActionButton);
-                  document.getElementById(`taskTableRow${i}`).appendChild(taskTableAction);
+                  document
+                    .getElementById(`taskTableRow${i}`)
+                    .appendChild(taskTableAction);
                   (function (i, taskId) {
                     taskTableActionButton.onclick = function () {
                       ZOHO.CRM.API.updateRecord({
@@ -123,17 +149,20 @@ function initializeWidget() {
                         },
                         Trigger: ["workflow"],
                       }).then(function () {
-                        var divTask = document.getElementById(`taskTableRow${i}`);
+                        var divTask = document.getElementById(
+                          `taskTableRow${i}`
+                        );
                         divTask.remove();
                       });
                     };
-                  } )(i, taskList[i]["id"]);
+                  })(i, taskList[i]["id"]);
+                }
               }
               var closeButton = document.createElement("button");
               var closeButtonText = document.createTextNode("Close Widget");
               closeButton.appendChild(closeButtonText);
               closeButton.setAttribute("id", "closeButton");
-              closeButton.setAttribute("style", "margin-top: 20px;")
+              closeButton.setAttribute("style", "margin-top: 20px;");
               document
                 .getElementById("mainInformation")
                 .appendChild(closeButton);
